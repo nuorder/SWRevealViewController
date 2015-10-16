@@ -216,7 +216,7 @@ static CGFloat scaledValue( CGFloat v1, CGFloat min2, CGFloat max2, CGFloat min1
     [self _layoutRearViewsForLocation:xLocation];
     
     // set front view frame
-    CGRect frame = CGRectMake(xLocation, 0.0f, bounds.size.width, bounds.size.height);
+    CGRect frame = CGRectMake(xLocation, 0.0f, bounds.size.width - _c.frontViewEdgeInset.right, bounds.size.height);
     _frontView.frame = [self hierarchycalFrameAdjustment:frame];
     
     // setup front view shadow path if needed (front view loaded and not removed)
@@ -669,6 +669,7 @@ const int FrontViewPositionNone = 0xff;
     _draggableBorderWidth = 0.0f;
     _clipsViewsToBounds = NO;
     _extendsPointInsideHit = NO;
+    _frontViewEdgeInsets = UIEdgeInsetsZero;
 }
 
 

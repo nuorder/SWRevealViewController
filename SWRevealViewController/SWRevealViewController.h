@@ -235,8 +235,15 @@ typedef NS_ENUM(NSInteger, SWRevealToggleAnimationType)
 // Thus, you can disable user interactions on your frontViewController view without affecting the tap recognizer.
 - (UITapGestureRecognizer*)tapGestureRecognizer;
 
+
 /* The following properties are provided for further customization, they are set to default values on initialization,
    you do not generally have to set them */
+
+/**
+ *  Defines the edge insets for the front view. Presently only the right value is used
+ */
+@property (nonatomic) UIEdgeInsets frontViewEdgeInsets;
+
 
 // Defines how much of the rear or right view is shown, default is 260.
 // Negative values indicate that the reveal width should be computed by substracting the full front view width,
