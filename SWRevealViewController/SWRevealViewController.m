@@ -844,7 +844,7 @@ const int FrontViewPositionNone = 0xff;
 
 - (void)revealToggleAnimated:(BOOL)animated
 {
-    FrontViewPosition toggledFrontViewPosition = FrontViewPositionLeft;
+    FrontViewPosition toggledFrontViewPosition = MAX(_minimumFrontViewPosition,FrontViewPositionLeft);
     if (_frontViewPosition <= FrontViewPositionLeft)
         toggledFrontViewPosition = FrontViewPositionRight;
     
@@ -1248,7 +1248,10 @@ const int FrontViewPositionNone = 0xff;
     CGFloat translation = [recognizer translationInView:_contentView].x;
     
     CGFloat baseLocation = [_contentView frontLocationForPosition:_panInitialFrontPosition];
-    CGFloat xLocation = MAX(_c.minimumFrontViewXLocation, baseLocation + translation);
+
+    CGFloat minXLocation = [_contentView frontLocationForPosition:_minimumFrontViewPosition];
+
+    CGFloat xLocation = MAX(minXLocation, baseLocation + translation);
     
     if ( xLocation < 0 )
     {
@@ -1293,7 +1296,7 @@ const int FrontViewPositionNone = 0xff;
     xLocation = xLocation * symetry;
     
     // initially we assume drag to left and default duration
-    FrontViewPosition frontViewPosition = MAX(_c.minimumFrontViewPosition, FrontViewPositionLeft);
+    FrontViewPosition frontViewPosition = MAX(_minimumFrontViewPosition, FrontViewPositionLeft);
     NSTimeInterval duration = _toggleAnimationDuration;
 
     // Velocity driven change:
