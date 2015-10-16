@@ -671,7 +671,6 @@ const int FrontViewPositionNone = 0xff;
     _extendsPointInsideHit = NO;
     _frontViewEdgeInsets = UIEdgeInsetsZero;
     _minimumFrontViewPosition = FrontViewPositionLeft;
-    _minimumFrontViewXLocation = 0;
 
 }
 
@@ -766,7 +765,7 @@ const int FrontViewPositionNone = 0xff;
 }
 
 
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     // we could have simply not implemented this, but we choose to call super to make explicit that we
     // want the default behavior.
@@ -844,7 +843,7 @@ const int FrontViewPositionNone = 0xff;
 
 - (void)revealToggleAnimated:(BOOL)animated
 {
-    FrontViewPosition toggledFrontViewPosition = MAX(_minimumFrontViewPosition,FrontViewPositionLeft);
+    FrontViewPosition toggledFrontViewPosition = FrontViewPositionLeft;
     if (_frontViewPosition <= FrontViewPositionLeft)
         toggledFrontViewPosition = FrontViewPositionRight;
     
@@ -1714,12 +1713,13 @@ const int FrontViewPositionNone = 0xff;
             [self performSegueWithIdentifier:SWSegueFrontIdentifier sender:nil];
         }
         @catch(NSException *exception) {}
-        
+        /* prc prevent exception thrown for right view.
         @try
         {
             [self performSegueWithIdentifier:SWSegueRightIdentifier sender:nil];
         }
         @catch(NSException *exception) {}
+         */
     }
 }
 
