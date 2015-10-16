@@ -216,7 +216,7 @@ static CGFloat scaledValue( CGFloat v1, CGFloat min2, CGFloat max2, CGFloat min1
     [self _layoutRearViewsForLocation:xLocation];
     
     // set front view frame
-    CGRect frame = CGRectMake(xLocation, 0.0f, bounds.size.width - _c.frontViewEdgeInset.right, bounds.size.height);
+    CGRect frame = CGRectMake(xLocation, 0.0f, bounds.size.width - _c.frontViewEdgeInsets.right, bounds.size.height);
     _frontView.frame = [self hierarchycalFrameAdjustment:frame];
     
     // setup front view shadow path if needed (front view loaded and not removed)
@@ -670,6 +670,9 @@ const int FrontViewPositionNone = 0xff;
     _clipsViewsToBounds = NO;
     _extendsPointInsideHit = NO;
     _frontViewEdgeInsets = UIEdgeInsetsZero;
+    _minimumFrontViewPosition = FrontViewPositionLeft;
+    _minimumFrontViewXLocation = 0;
+
 }
 
 
@@ -1245,7 +1248,7 @@ const int FrontViewPositionNone = 0xff;
     CGFloat translation = [recognizer translationInView:_contentView].x;
     
     CGFloat baseLocation = [_contentView frontLocationForPosition:_panInitialFrontPosition];
-    CGFloat xLocation = baseLocation + translation;
+    CGFloat xLocation = MAX(_c.minimumFrontViewXLocation, baseLocation + translation);
     
     if ( xLocation < 0 )
     {
@@ -1290,7 +1293,7 @@ const int FrontViewPositionNone = 0xff;
     xLocation = xLocation * symetry;
     
     // initially we assume drag to left and default duration
-    FrontViewPosition frontViewPosition = FrontViewPositionLeft;
+    FrontViewPosition frontViewPosition = MAX(_c.minimumFrontViewPosition, FrontViewPositionLeft);
     NSTimeInterval duration = _toggleAnimationDuration;
 
     // Velocity driven change:

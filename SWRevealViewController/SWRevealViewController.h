@@ -244,6 +244,9 @@ typedef NS_ENUM(NSInteger, SWRevealToggleAnimationType)
  */
 @property (nonatomic) UIEdgeInsets frontViewEdgeInsets;
 
+@property (nonatomic) FrontViewPosition minimumFrontViewPosition;
+
+@property (nonatomic) CGFLoat minimumFrontViewXLocation;
 
 // Defines how much of the rear or right view is shown, default is 260.
 // Negative values indicate that the reveal width should be computed by substracting the full front view width,
